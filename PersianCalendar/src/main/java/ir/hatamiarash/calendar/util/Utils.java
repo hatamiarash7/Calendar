@@ -33,6 +33,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.azizhuss.arabicreshaper.ArabicShaping;
 import com.github.praytimes.CalculationMethod;
 import com.github.praytimes.Clock;
@@ -53,6 +57,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -76,6 +81,7 @@ import ir.hatamiarash.calendar.entity.DayEntity;
 import ir.hatamiarash.calendar.entity.EventEntity;
 import ir.hatamiarash.calendar.enums.CalendarTypeEnum;
 import ir.hatamiarash.calendar.enums.SeasonEnum;
+import ir.hatamiarash.calendar.mine.AppController;
 import ir.hatamiarash.calendar.service.BroadcastReceivers;
 
 import static ir.hatamiarash.calendar.Constants.AM_IN_PERSIAN;
@@ -141,6 +147,8 @@ public class Utils {
     private String[] weekDays;
     private String cachedCityKey = "";
     private CityEntity cachedCity;
+
+    private JSONArray custom_events;
 
     private Utils(Context context) {
         this.context = context;
@@ -579,11 +587,54 @@ public class Utils {
                 boolean holiday = event.getBoolean("holiday");
                 events.add(new EventEntity(new PersianDate(year, month, day), title, holiday));
             }
-
-        } catch (JSONException e) {
+            length = custom_events.length();
+            for (int i = 0; i < length; ++i) {
+                JSONObject event = custom_events.getJSONObject(i);
+                int year = event.getInt("year");
+                int month = event.getInt("month");
+                int day = event.getInt("day");
+                String title = event.getString("title");
+                boolean holiday = event.getBoolean("holiday");
+                events.add(new EventEntity(new PersianDate(year, month, day), title, holiday));
+            }
+        } catch (JSONException | NullPointerException e) {
             Log.e(TAG, e.getMessage());
         }
         this.events = events;
+    }
+
+    private void loadCustomEvents() {
+        String string_req = "req_fetch";
+        StringRequest strReq = new StringRequest(Request.Method.POST, "http://cl.zimia.ir/client.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.w(TAG, "Volley Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        custom_events = jObj.getJSONArray("event");
+                        loadEvents();
+                    } else
+                        Log.w("Error", jObj.getString("error_msg"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w(TAG, "Volley Error" + error.getMessage());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() {
+                java.util.Map<String, String> params = new HashMap<>();
+                params.put("tag", "get_events");
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, string_req);
     }
 
     private int maxSupportedYear = -1;
@@ -615,7 +666,7 @@ public class Utils {
 
     private void loadMinMaxSupportedYear() {
         if (events == null)
-            loadEvents();
+            loadCustomEvents();
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         for (EventEntity eventEntity : events) {
@@ -631,7 +682,7 @@ public class Utils {
 
     private List<EventEntity> getEvents(PersianDate day) {
         if (events == null)
-            loadEvents();
+            loadCustomEvents();
         List<EventEntity> result = new ArrayList<>();
         for (EventEntity eventEntity : events) {
             if (eventEntity.getDate().equals(day))

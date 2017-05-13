@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -22,6 +24,7 @@
         android:required="false"/>
 
     <application
+        android:name=".mine.AppController"
         android:allowBackup="false"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
