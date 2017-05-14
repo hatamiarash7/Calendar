@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebraminio on 2/21/16.
- */
 public class AthanNumericDialog extends EditTextPreferenceDialogFragmentCompat {
 
     @Override
@@ -19,9 +16,8 @@ public class AthanNumericDialog extends EditTextPreferenceDialogFragmentCompat {
         super.onBindDialogView(view);
 
         View dialogMessageView = view.findViewById(android.R.id.message);
-        if (dialogMessageView != null && dialogMessageView instanceof TextView) {
+        if (dialogMessageView != null && dialogMessageView instanceof TextView)
             Utils.getInstance(getContext()).setFontAndShape((TextView) dialogMessageView);
-        }
 
         EditText editText = (EditText) view.findViewById(android.R.id.edit);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED |

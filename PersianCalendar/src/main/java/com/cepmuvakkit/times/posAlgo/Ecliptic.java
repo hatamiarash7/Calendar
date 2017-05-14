@@ -4,14 +4,11 @@
  */
 package com.cepmuvakkit.times.posAlgo;
 
-/**
- * @author mehmetrg
- */
 public class Ecliptic {
 
     public double λ; //λ the ecliptic longitude
     public double β; //β the ecliptic latitude
-    public double Δ; //distance  in km
+    double Δ; //distance  in km
 
     Ecliptic() {
     }
@@ -27,5 +24,3 @@ public class Ecliptic {
         this.Δ = radius;
     }
 }
-
-

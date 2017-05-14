@@ -93,7 +93,6 @@ public class CompassFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

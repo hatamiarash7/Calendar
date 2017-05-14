@@ -10,9 +10,6 @@ import android.util.AttributeSet;
 import ir.hatamiarash.calendar.Constants;
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebraminio on 2/16/16.
- */
 public class AthanNumericPreference extends EditTextPreference {
 
     public AthanNumericPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {

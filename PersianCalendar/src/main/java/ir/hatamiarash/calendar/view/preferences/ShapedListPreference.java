@@ -7,10 +7,9 @@ import android.util.AttributeSet;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebraminio on 2/16/16.
- */
 public class ShapedListPreference extends ListPreference {
+    private String defaultValue = "";
+
     public ShapedListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
@@ -33,14 +32,13 @@ public class ShapedListPreference extends ListPreference {
         Utils.getInstance(getContext()).setFontAndShape(holder);
     }
 
-    public void setSelected(String selected) {
+    void setSelected(String selected) {
         final boolean wasBlocking = shouldDisableDependents();
         persistString(selected);
         final boolean isBlocking = shouldDisableDependents();
-        if (isBlocking != wasBlocking) notifyDependencyChange(isBlocking);
+        if (isBlocking != wasBlocking)
+            notifyDependencyChange(isBlocking);
     }
-
-    String defaultValue = "";
 
     // steal default value, well, not aware of a better way
     @Override
@@ -49,7 +47,7 @@ public class ShapedListPreference extends ListPreference {
         this.defaultValue = (String) defaultValue;
     }
 
-    public String getSelected() {
+    String getSelected() {
         return getPersistedString(defaultValue);
     }
 }

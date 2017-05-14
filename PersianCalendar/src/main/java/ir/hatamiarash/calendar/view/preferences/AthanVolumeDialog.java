@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
+import java.io.IOException;
+
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.util.Utils;
-
-import java.io.IOException;
 
 public class AthanVolumeDialog extends PreferenceDialogFragmentCompat {
     private final String TAG = AthanVolumeDialog.class.getName();

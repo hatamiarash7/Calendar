@@ -12,12 +12,6 @@ import ir.hatamiarash.calendar.util.Utils;
 
 import java.lang.ref.WeakReference;
 
-/**
- * The Calendar Service that updates widget time and clock and build/update
- * calendar notification.
- *
- * @author Ebrahim Byagowi <ebrahim@byagowi.com>
- */
 public class ApplicationService extends Service {
 
     private static WeakReference<ApplicationService> instance;

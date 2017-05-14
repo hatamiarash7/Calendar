@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebrahim on 3/26/16.
- */
 public class GPSLocationPreference extends DialogPreference {
 
     public GPSLocationPreference(Context context, AttributeSet attrs) {
@@ -21,5 +18,4 @@ public class GPSLocationPreference extends DialogPreference {
         super.onBindViewHolder(holder);
         Utils.getInstance(getContext()).setFontAndShape(holder);
     }
-
 }

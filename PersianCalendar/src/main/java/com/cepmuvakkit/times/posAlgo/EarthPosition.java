@@ -4,29 +4,22 @@
  */
 package com.cepmuvakkit.times.posAlgo;
 
-/**
- * @author mgeden
- */
-public class EarthPosition {
+class EarthPosition {
 
     private double mLatitude;
     private double mLongitude;
     private double mTimezone;
-
-
     private int mAltitude, mTemperature, mPressure;
 
     public EarthPosition() {
         this(32.85, 39.95, 2, 10, 1010, 0);
     }
 
-    public EarthPosition(double latitude, double longitude) {
-
+    EarthPosition(double latitude, double longitude) {
         this(latitude, longitude, Math.round(longitude / 15.0), 0, 10, 1010);
-
     }
 
-    public EarthPosition(double latitude, double longitude, double timezone, int altitude, int temperature, int pressure) {
+    private EarthPosition(double latitude, double longitude, double timezone, int altitude, int temperature, int pressure) {
         mLatitude = latitude;
         mLongitude = longitude;
         mTimezone = timezone;
@@ -68,7 +61,7 @@ public class EarthPosition {
         return (short) mTemperature;
     }
 
-    public EarthHeading toEarthHeading(EarthPosition target) {
+    EarthHeading toEarthHeading(EarthPosition target) {
         // great circle formula from:
         // http://williams.best.vwh.net/avform.htm
         double radPerDeg = Math.PI / 180;
@@ -84,11 +77,9 @@ public class EarthPosition {
         // double c=a*a+Math.cos(lat1)*Math.cos(lat2))*b*b
         if (d > 0) {
             if ((Math.sin(lon2 - lon1)) < 0) //tc1=acos((sin(lat2)-sin(lat1)*cos(d))/(sin(d)*cos(lat1)))
-            {
                 tc1 = MATH.acos((Math.sin(lat2) - Math.sin(lat1) * Math.cos(d)) / (Math.sin(d) * Math.cos(lat1)));//2646123918118404228e-18
-            } else {
+            else
                 tc1 = 2 * Math.PI - MATH.acos((Math.sin(lat2) - Math.sin(lat1) * Math.cos(d)) / (Math.sin(d) * Math.cos(lat1)));
-            }
         }
         //  tc1=2*pi-acos((sin(lat2)-sin(lat1)*cos(d))/(sin(d)*cos(lat1)))
         return new EarthHeading((tc1 / radPerDeg), (long) (d * 6371000));

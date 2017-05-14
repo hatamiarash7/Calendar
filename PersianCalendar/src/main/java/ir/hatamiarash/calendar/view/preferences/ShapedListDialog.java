@@ -5,14 +5,11 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceDialogFragmentCompat;
 
+import java.util.Arrays;
+
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.ShapedArrayAdapter;
 
-import java.util.Arrays;
-
-/**
- * Created by ebraminio on 2/21/16.
- */
 public class ShapedListDialog extends PreferenceDialogFragmentCompat {
 
     @Override

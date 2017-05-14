@@ -1,15 +1,6 @@
 package calendar;
 
-/**
- * Abstract class representing a date. Instances of this class should be
- * mutable. Varios getters and setters are provided so that date manipulation is
- * as convenient as possible.
- *
- * @author Amir
- * @author ebraminio
- */
 public abstract class AbstractDate {
-
     public void setDate(int year, int month, int day) {
         setYear(year);
         setMonth(month);

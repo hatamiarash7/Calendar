@@ -1,17 +1,8 @@
 package com.azizhuss.arabicreshaper;
 
-// borrowed from code.google.com/p/arabicreshaper/, Apache License
+import android.support.annotation.NonNull;
 
-/**
- * This code is for Arabic Reshaping. Writtien by Abdulaziz Alhussien.
- * azizanroid@gmail.com
- * <p/>
- * This code is used in Mirsal, Ibrahim Keyboard, Arabic Contact, Arabic notepad
- * applications
- *
- * @author azizanroid@gmail.com
- * @author ebraminio (renaming and cleaning-up)
- */
+import org.jetbrains.annotations.Contract;
 
 public class ArabicShaping {
 
@@ -226,13 +217,13 @@ public class ArabicShaping {
             {0x06D2, 0x0804, 0xFBAE, 0xFBAF, 0xFBAF, 0xFBAF},
             {0x06D3, 0x0804, 0xFBB0, 0xFBB1, 0xFBB1, 0xFBB1}};
 
+    @NonNull
     public static String shape(String str) {
         String Temp = " " + str + " ";
         char pre, at, post;
         StringBuilder reshapedString = new StringBuilder();
         int i = 0;
         int len = str.length();
-
         char post_post;
         char pre_pre = ' ';
 
@@ -240,7 +231,6 @@ public class ArabicShaping {
             pre = Temp.charAt(i);
             at = Temp.charAt(i + 1);
             post = Temp.charAt(i + 2);
-
             int which_case = getCase(at);
             int what_case_post = getCase(post);
             int what_case_pre = getCase(pre);
@@ -253,65 +243,48 @@ public class ArabicShaping {
                 pre = pre_pre;
                 what_case_pre = getCase(pre);
             }
-            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK) {
+            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK)
                 pre_step = 1;
-
-            }
-
             switch (which_case & 0x000F) {
-
                 case NOTUSED_CHAR:
                 case NOTARABIC_CHAR:
-
                     reshapedString.append(at);
-
                     i++;
                     continue;
                 case NORIGHT_NOLEFT_CHAR:
                 case TATWEEL_CHAR:
                     reshapedString.append(getShape(at, 0));
-
                     i++;
                     continue;
                 case RIGHT_LEFT_CHAR_LAM:
-
                     if ((what_case_post & 0x000F) == RIGHT_NOLEFT_CHAR_ALEF) {
                         reshapedString.append(getShape(post, pre_step + 2));
                         i = i + 2;
-
                         continue;
                     } else if ((what_case_post & RIGHT_NOLEFT_CHAR_MASK) == RIGHT_NOLEFT_CHAR_MASK) {
                         reshapedString.append(getShape(at, 2 + pre_step));
                         i = i + 1;
-
                         continue;
-
                     } else if (what_case_post == TANWEEN) {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TASHKEEL) {
                         post_post = Temp.charAt(i + 3);
                         what_case_post_post = getCase(post_post);
                         if ((what_case_post_post & RIGHT_NOLEFT_CHAR_MASK) == RIGHT_NOLEFT_CHAR_MASK) {
                             reshapedString.append(getShape(at, 2 + pre_step));
                             i = i + 1;
-
                             continue;
-
                         } else {
                             reshapedString.append(getShape(at, pre_step));
                             i = i + 1;
                             continue;
-
                         }
-
                     } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
 
                 case RIGHT_LEFT_CHAR:
@@ -319,12 +292,10 @@ public class ArabicShaping {
                         reshapedString.append(getShape(at, 2 + pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TANWEEN) {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TASHKEEL) {
                         post_post = Temp.charAt(i + 3);
                         what_case_post_post = getCase(post_post);
@@ -332,19 +303,15 @@ public class ArabicShaping {
                             reshapedString.append(getShape(at, 2 + pre_step));
                             i = i + 1;
                             continue;
-
                         } else {
                             reshapedString.append(getShape(at, pre_step));
                             i = i + 1;
                             continue;
-
                         }
-
                     } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
                 case RIGHT_NOLEFT_CHAR_ALEF:
                 case RIGHT_NOLEFT_CHAR:
@@ -361,28 +328,23 @@ public class ArabicShaping {
                     i++;
                     pre_pre = pre;
                     continue;
-
                 default:
                     reshapedString.append(getShape(at, 0));
                     i++;
-
             }
-
         }
-
         return reshapedString.toString();
     }
 
+    @NonNull
     public static String reshape_reverse(String Str) {
         String Temp = " " + Str + "   ";
         char pre, at, post;
         StringBuilder reshapedString = new StringBuilder();
         int i = 0;
         int len = Str.length();
-
         char post_post;
         // char pre_pre = ' ';
-
         while (i < len) {
             pre = Temp.charAt(i + 2);
             at = Temp.charAt(i + 1);
@@ -400,81 +362,37 @@ public class ArabicShaping {
                 pre = Temp.charAt(i + 3);
                 what_case_pre = getCase(pre);
             }
-            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK) {
+            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK)
                 pre_step = 1;
-
-            }
 
             // System.out.println("##letter "+ pre);
             switch (which_case & 0x000F) {
-
                 case NOTUSED_CHAR:
                 case NOTARABIC_CHAR:
-
                     reshapedString.append(at);
-
                     i++;
                     continue;
                 case NORIGHT_NOLEFT_CHAR:
                 case TATWEEL_CHAR:
                     reshapedString.append(getShape(at, 0));
-
                     i++;
                     continue;
                 case RIGHT_NOLEFT_CHAR_ALEF:
-
                     // System.out.println("--letter "+ pre);
-
                     if ((what_case_pre & 0x000F) == RIGHT_LEFT_CHAR_LAM) {
                         pre = Temp.charAt(i + 3);
                         // System.out.println("++letter "+ pre);
                         what_case_pre = getCase(pre);
                         pre_step = 0;
-                        if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK) {
+                        if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK)
                             pre_step = 1;
-
-                        }
                         reshapedString.append(getShape(at, pre_step + 2));
                         i = i + 2;
-
                         continue;
-                    } /*
-                 * else if
-				 * ((what_case_post&RIGHT_NOLEFT_CHAR_MASK)==RIGHT_NOLEFT_CHAR_MASK
-				 * ){ reshapedString.append(getShape(at,2+pre_step)); i=i+1;
-				 * 
-				 * continue;
-				 * 
-				 * 
-				 * } else if (what_case_post==TANWEEN){
-				 * reshapedString.append(getShape(at,pre_step)); i=i+1;
-				 * continue;
-				 * 
-				 * 
-				 * } else if (what_case_post==TASHKEEL){
-				 * post_post=Temp.charAt(i+3);
-				 * what_case_post_post=getCase(post_post); if
-				 * ((what_case_post_post
-				 * &RIGHT_NOLEFT_CHAR_MASK)==RIGHT_NOLEFT_CHAR_MASK){
-				 * reshapedString.append(getShape(at,2+pre_step)); i=i+1;
-				 * 
-				 * continue;
-				 * 
-				 * } else { reshapedString.append(getShape(at,pre_step)); i=i+1;
-				 * continue;
-				 * 
-				 * }
-				 * 
-				 * 
-				 * 
-				 * 
-				 * 
-				 * }
-				 */ else {
+                    } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
                 case RIGHT_LEFT_CHAR_LAM:
                 case RIGHT_LEFT_CHAR:
@@ -482,12 +400,10 @@ public class ArabicShaping {
                         reshapedString.append(getShape(at, 2 + pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TANWEEN) {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TASHKEEL) {
                         post_post = Temp.charAt(i + 3);
                         what_case_post_post = getCase(post_post);
@@ -495,21 +411,16 @@ public class ArabicShaping {
                             reshapedString.append(getShape(at, 2 + pre_step));
                             i = i + 1;
                             continue;
-
                         } else {
                             reshapedString.append(getShape(at, pre_step));
                             i = i + 1;
                             continue;
-
                         }
-
                     } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
-
                 case RIGHT_NOLEFT_CHAR:
                     reshapedString.append(getShape(at, pre_step));
                     i = i + 1;
@@ -524,18 +435,15 @@ public class ArabicShaping {
                     i++;
                     // pre_pre = pre;
                     continue;
-
                 default:
                     reshapedString.append(getShape(at, 0));
                     i++;
-
             }
-
         }
-
         return reshapedString.toString();
     }
 
+    @NonNull
     public static String reshape_browser(String Str) {
         String Temp = " " + Str + " ";
         char pre, at, post;
@@ -545,12 +453,10 @@ public class ArabicShaping {
         // boolean pre_can_connect = false;
         char post_post;
         char pre_pre = ' ';
-
         while (i < len) {
             pre = Temp.charAt(i);
             at = Temp.charAt(i + 1);
             post = Temp.charAt(i + 2);
-
             int which_case = getCase(at);
             int what_case_post = getCase(post);
             int what_case_pre = getCase(pre);
@@ -558,29 +464,22 @@ public class ArabicShaping {
             // int what_case_pre_pre;
             // which_case=0x000F&
             // Log.v("what case"," :" +which_case);
-
             if (at == '\u060c') {
                 reshapedString.append(',');
                 i++;
                 continue;
             }
             // if (at==)
-
             int pre_step = 0;
             if (what_case_pre == TASHKEEL) {
                 pre = pre_pre;
                 what_case_pre = getCase(pre);
             }
-            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK) {
+            if ((what_case_pre & LEFT_CHAR_MASK) == LEFT_CHAR_MASK)
                 pre_step = 1;
-
-            }
-
             switch (which_case & 0x000F) {
-
                 case NOTUSED_CHAR:
                 case NOTARABIC_CHAR:
-
                     reshapedString.append(at);
                     // pre_can_connect = false;
                     i++;
@@ -595,7 +494,6 @@ public class ArabicShaping {
                     i++;
                     continue;
                 case RIGHT_LEFT_CHAR_LAM:
-
                     if ((what_case_post & 0x000F) == RIGHT_NOLEFT_CHAR_ALEF) {
                         reshapedString.append(getShape(post, pre_step + 2));
                         i = i + 2;
@@ -606,12 +504,10 @@ public class ArabicShaping {
                         i = i + 1;
                         // pre_can_connect = true;
                         continue;
-
                     } else if (what_case_post == TANWEEN) {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TASHKEEL) {
                         post_post = Temp.charAt(i + 2);
                         what_case_post_post = getCase(post_post);
@@ -620,32 +516,25 @@ public class ArabicShaping {
                             i = i + 1;
                             // pre_can_connect = true;
                             continue;
-
                         } else {
                             reshapedString.append(getShape(at, pre_step));
                             i = i + 1;
                             continue;
-
                         }
-
                     } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
-
                 case RIGHT_LEFT_CHAR:
                     if ((what_case_post & RIGHT_NOLEFT_CHAR_MASK) == RIGHT_NOLEFT_CHAR_MASK) {
                         reshapedString.append(getShape(at, 2 + pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TANWEEN) {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     } else if (what_case_post == TASHKEEL) {
                         post_post = Temp.charAt(i + 3);
                         what_case_post_post = getCase(post_post);
@@ -654,19 +543,15 @@ public class ArabicShaping {
                             i = i + 1;
                             // pre_can_connect = true;
                             continue;
-
                         } else {
                             reshapedString.append(getShape(at, pre_step));
                             i = i + 1;
                             continue;
-
                         }
-
                     } else {
                         reshapedString.append(getShape(at, pre_step));
                         i = i + 1;
                         continue;
-
                     }
                 case RIGHT_NOLEFT_CHAR_ALEF:
                 case RIGHT_NOLEFT_CHAR:
@@ -683,27 +568,23 @@ public class ArabicShaping {
                     i++;
                     pre_pre = pre;
                     continue;
-
                 default:
                     reshapedString.append(getShape(at, 0));
                     i++;
-
             }
-
         }
-
         return reshapedString.toString();
     }
 
+    @Contract(pure = true)
     private static int getCase(char ch) {
-        if (ch < 0x0621 || ch > 0x06d2) {
+        if (ch < 0x0621 || ch > 0x06d2)
             return 0;
-        }
         return allchar[(int) ch - 0x0621][1];
     }
 
+    @Contract(pure = true)
     private static char getShape(char ch, int which_shape) {
         return allchar[(int) ch - 0x0621][2 + which_shape];
     }
-
 }

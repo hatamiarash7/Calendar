@@ -3,7 +3,6 @@ package ir.hatamiarash.calendar.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,9 @@ import android.widget.TextView;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * About Calendar Activity
- *
- * @author ebraminio
- */
 public class AboutFragment extends Fragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
         Utils utils = Utils.getInstance(getContext());
         utils.setActivityTitleAndSubtitle(getActivity(), getString(R.string.about), "");

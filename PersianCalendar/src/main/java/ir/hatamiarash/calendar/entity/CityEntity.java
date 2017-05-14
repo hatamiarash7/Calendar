@@ -2,9 +2,6 @@ package ir.hatamiarash.calendar.entity;
 
 import com.github.praytimes.Coordinate;
 
-/**
- * Created by ebraminio on 2/18/16.
- */
 public class CityEntity {
     private String key;
     private String en;

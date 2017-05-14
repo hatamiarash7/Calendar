@@ -20,18 +20,16 @@ import android.support.v7.preference.PreferenceDialogFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.TextView;
 
-import ir.hatamiarash.calendar.Constants;
-import ir.hatamiarash.calendar.R;
-import ir.hatamiarash.calendar.util.Utils;
 import com.github.praytimes.Coordinate;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by ebrahim on 3/26/16.
- */
+import ir.hatamiarash.calendar.Constants;
+import ir.hatamiarash.calendar.R;
+import ir.hatamiarash.calendar.util.Utils;
+
 public class GPSLocationDialog extends PreferenceDialogFragmentCompat {
 
     LocationManager locationManager;
@@ -76,25 +74,20 @@ public class GPSLocationDialog extends PreferenceDialogFragmentCompat {
     public void tryRetrieveLocation() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
+            if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            }
-
-            if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+            if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-            }
         } else if (first) {
             first = false;
             ActivityCompat.requestPermissions(getActivity(),
-                    new String[] {
+                    new String[]{
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION
                     },
                     Constants.LOCATION_PERMISSION_REQUEST_CODE);
-        } else {
+        } else
             dismiss();
-        }
     }
 
     LocationListener locationListener = new LocationListener() {
@@ -127,17 +120,15 @@ public class GPSLocationDialog extends PreferenceDialogFragmentCompat {
         List<Address> addresses;
         try {
             addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            if (addresses.size() > 0) {
+            if (addresses.size() > 0)
                 cityName = addresses.get(0).getLocality();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         String result = "";
-        if (cityName != null) {
+        if (cityName != null)
             result = cityName + "\n\n";
-        }
         // this time, with native digits
         result += utils.formatCoordinate(
                 new Coordinate(location.getLatitude(), location.getLongitude()),
@@ -154,18 +145,16 @@ public class GPSLocationDialog extends PreferenceDialogFragmentCompat {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(Constants.PREF_LATITUDE, latitude);
             editor.putString(Constants.PREF_LONGITUDE, longitude);
-            if (cityName != null) {
+            if (cityName != null)
                 editor.putString(Constants.PREF_GEOCODED_CITYNAME, cityName);
-            } else {
+            else
                 editor.putString(Constants.PREF_GEOCODED_CITYNAME, "");
-            }
             editor.putString(Constants.PREF_SELECTED_LOCATION, Constants.DEFAULT_CITY);
             editor.commit();
         }
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             locationManager.removeUpdates(locationListener);
-        }
     }
 }

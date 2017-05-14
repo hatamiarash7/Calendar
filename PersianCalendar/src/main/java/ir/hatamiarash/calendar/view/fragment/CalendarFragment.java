@@ -21,11 +21,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ir.hatamiarash.calendar.Constants;
-import ir.hatamiarash.calendar.R;
-import ir.hatamiarash.calendar.adapter.CalendarAdapter;
-import ir.hatamiarash.calendar.util.Utils;
-import ir.hatamiarash.calendar.view.dialog.SelectDayDialog;
 import com.github.praytimes.Clock;
 import com.github.praytimes.Coordinate;
 import com.github.praytimes.PrayTime;
@@ -38,6 +33,11 @@ import java.util.Map;
 import calendar.CivilDate;
 import calendar.DateConverter;
 import calendar.PersianDate;
+import ir.hatamiarash.calendar.Constants;
+import ir.hatamiarash.calendar.R;
+import ir.hatamiarash.calendar.adapter.CalendarAdapter;
+import ir.hatamiarash.calendar.util.Utils;
+import ir.hatamiarash.calendar.view.dialog.SelectDayDialog;
 
 public class CalendarFragment extends Fragment
         implements View.OnClickListener, ViewPager.OnPageChangeListener {
@@ -102,68 +102,56 @@ public class CalendarFragment extends Fragment
         maghribLayout = (RelativeLayout) view.findViewById(R.id.maghribLayout);
         ishaLayout = (RelativeLayout) view.findViewById(R.id.ishaLayout);
         midnightLayout = (RelativeLayout) view.findViewById(R.id.midnightLayout);
-
         gregorianDate = (TextView) view.findViewById(R.id.gregorian_date);
-        utils.setFont(gregorianDate);
         islamicDate = (TextView) view.findViewById(R.id.islamic_date);
-        utils.setFont(islamicDate);
         shamsiDate = (TextView) view.findViewById(R.id.shamsi_date);
-        utils.setFont(shamsiDate);
         weekDayName = (TextView) view.findViewById(R.id.week_day_name);
-        utils.setFont(weekDayName);
         today = (TextView) view.findViewById(R.id.today);
         todayIcon = (AppCompatImageView) view.findViewById(R.id.today_icon);
-
         fajrTextView = (TextView) view.findViewById(R.id.fajr);
-        utils.setFont(fajrTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.fajrText));
-
         dhuhrTextView = (TextView) view.findViewById(R.id.dhuhr);
-        utils.setFont(dhuhrTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.dhuhrText));
-
-        asrTextView = (TextView) view.findViewById(R.id.asr);
-        utils.setFont(asrTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.asrText));
-
         maghribTextView = (TextView) view.findViewById(R.id.maghrib);
-        utils.setFont(maghribTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.maghribText));
-
+        asrTextView = (TextView) view.findViewById(R.id.asr);
         ishaTextView = (TextView) view.findViewById(R.id.isgha);
-        utils.setFont(ishaTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.ishaText));
-
         sunriseTextView = (TextView) view.findViewById(R.id.sunrise);
-        utils.setFont(sunriseTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.sunriseText));
-
         sunsetTextView = (TextView) view.findViewById(R.id.sunset);
-        utils.setFont(sunsetTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.sunsetText));
-
         midnightTextView = (TextView) view.findViewById(R.id.midnight);
-        utils.setFont(midnightTextView);
-        utils.setFontAndShape((TextView) view.findViewById(R.id.midnightText));
-
         moreOwghat = (AppCompatImageView) view.findViewById(R.id.more_owghat);
-
         eventTitle = (TextView) view.findViewById(R.id.event_title);
-        utils.setFont(eventTitle);
         holidayTitle = (TextView) view.findViewById(R.id.holiday_title);
-        utils.setFont(holidayTitle);
-
         owghat = (CardView) view.findViewById(R.id.owghat);
         event = (CardView) view.findViewById(R.id.cardEvent);
-
         monthViewPager = (ViewPager) view.findViewById(R.id.calendar_pager);
+
+        utils.setFont(islamicDate);
+        utils.setFont(gregorianDate);
+        utils.setFont(shamsiDate);
+        utils.setFont(weekDayName);
+        utils.setFont(fajrTextView);
+        utils.setFont(dhuhrTextView);
+        utils.setFont(asrTextView);
+        utils.setFont(maghribTextView);
+        utils.setFont(ishaTextView);
+        utils.setFont(sunriseTextView);
+        utils.setFont(sunsetTextView);
+        utils.setFont(midnightTextView);
+        utils.setFont(eventTitle);
+        utils.setFont(holidayTitle);
+
+        utils.setFontAndShape((TextView) view.findViewById(R.id.fajrText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.dhuhrText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.asrText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.maghribText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.ishaText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.sunriseText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.sunsetText));
+        utils.setFontAndShape((TextView) view.findViewById(R.id.midnightText));
 
         coordinate = utils.getCoordinate();
         prayTimesCalculator = new PrayTimesCalculator(utils.getCalculationMethod());
 
         monthViewPager.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         monthViewPager.setCurrentItem(Constants.MONTHS_LIMIT / 2);
-
         monthViewPager.addOnPageChangeListener(this);
 
         owghat.setOnClickListener(this);
@@ -178,10 +166,9 @@ public class CalendarFragment extends Fragment
         utils.setFontAndShape((TextView) view.findViewById(R.id.owghat_text));
 
         String cityName = utils.getCityName(false);
-        if (!TextUtils.isEmpty(cityName)) {
+        if (!TextUtils.isEmpty(cityName))
             ((TextView) view.findViewById(R.id.owghat_text))
                     .append(" (" + utils.shape(cityName) + ")");
-        }
 
         // This will immediately be replaced by the same functionality on fragment but is here to
         // make sure enough space is dedicated to actionbar's title and subtitle, kinda hack anyway
@@ -207,10 +194,8 @@ public class CalendarFragment extends Fragment
         if (utils.getToday().equals(persianDate)) {
             today.setVisibility(View.GONE);
             todayIcon.setVisibility(View.GONE);
-            if (utils.iranTime) {
-                weekDayName.setText(weekDayName.getText() +
-                        utils.shape(" (" + getString(R.string.iran_time) + ")"));
-            }
+            if (utils.iranTime)
+                weekDayName.setText(weekDayName.getText() + utils.shape(" (" + getString(R.string.iran_time) + ")"));
         } else {
             today.setVisibility(View.VISIBLE);
             todayIcon.setVisibility(View.VISIBLE);
@@ -226,17 +211,12 @@ public class CalendarFragment extends Fragment
         intent.setData(CalendarContract.Events.CONTENT_URI);
 
         CivilDate civil = DateConverter.persianToCivil(persianDate);
-
-        intent.putExtra(CalendarContract.Events.DESCRIPTION,
-                utils.dayTitleSummary(persianDate));
-
         Calendar time = Calendar.getInstance();
         time.set(civil.getYear(), civil.getMonth() - 1, civil.getDayOfMonth());
 
-        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                time.getTimeInMillis());
-        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
-                time.getTimeInMillis());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, utils.dayTitleSummary(persianDate));
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, time.getTimeInMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, time.getTimeInMillis());
         intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 
         startActivity(intent);
@@ -255,7 +235,6 @@ public class CalendarFragment extends Fragment
             holidayTitle.setVisibility(View.VISIBLE);
             event.setVisibility(View.VISIBLE);
         }
-
         if (!TextUtils.isEmpty(events)) {
             eventTitle.setText(utils.shape(events));
             eventTitle.setVisibility(View.VISIBLE);

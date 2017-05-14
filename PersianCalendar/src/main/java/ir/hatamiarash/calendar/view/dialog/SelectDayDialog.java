@@ -3,6 +3,7 @@ package ir.hatamiarash.calendar.view.dialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
@@ -12,22 +13,19 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import calendar.CivilDate;
+import calendar.DateConverter;
+import calendar.IslamicDate;
+import calendar.PersianDate;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.ShapedArrayAdapter;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.fragment.CalendarFragment;
 
-import calendar.CivilDate;
-import calendar.DateConverter;
-import calendar.IslamicDate;
-import calendar.PersianDate;
-
-/**
- * Created by ebrahim on 3/20/16.
- */
 public class SelectDayDialog extends AppCompatDialogFragment {
     private int startingYearOnYearSpinner = 0;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -62,7 +60,8 @@ public class SelectDayDialog extends AppCompatDialogFragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

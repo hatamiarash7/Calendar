@@ -8,8 +8,8 @@ import android.graphics.Canvas;
 
 public class Horizontal {
 
-    public double h; //h         Altitude
-    public double Az; //Az       Azimuth
+    double h; //h         Altitude
+    double Az; //Az       Azimuth
 
     public Horizontal() {
     }
@@ -45,11 +45,9 @@ public class Horizontal {
         screenPosition.x = (int) (Math.sin(azimuth) * r) * (flipX ? -1 : 1) + midX;
         screenPosition.y = (int) (Math.cos(azimuth) * (-r)) + midY;
         return screenPosition;
-
     }
 
     public ScreenPosition toScreenPosition(int midX, int midY) {
-
         int maxR = Math.min(midX, midY);
         ScreenPosition screenPosition = new ScreenPosition();
         double r = ((90 - h) / 90) * maxR;
@@ -57,7 +55,5 @@ public class Horizontal {
         screenPosition.x = (int) (Math.sin(azimuth) * r) + midX;
         screenPosition.y = (int) (Math.cos(azimuth) * (-r)) + midY;
         return screenPosition;
-
     }
 }
-

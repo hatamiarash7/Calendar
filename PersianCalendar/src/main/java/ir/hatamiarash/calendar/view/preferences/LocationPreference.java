@@ -9,11 +9,6 @@ import android.util.AttributeSet;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * persian_calendar
- * Author: hamidsafdari22@gmail.com
- * Date: 1/17/16
- */
 public class LocationPreference extends DialogPreference {
 
     public LocationPreference(Context context, AttributeSet attrs) {
@@ -26,12 +21,11 @@ public class LocationPreference extends DialogPreference {
         Utils.getInstance(getContext()).setFontAndShape(holder);
     }
 
-    public void setSelected(String selected) {
+    void setSelected(String selected) {
         final boolean wasBlocking = shouldDisableDependents();
         persistString(selected);
         final boolean isBlocking = shouldDisableDependents();
         if (isBlocking != wasBlocking) notifyDependencyChange(isBlocking);
-        LocalBroadcastManager.getInstance(getContext())
-                .sendBroadcast(new Intent("update-preference"));
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent("update-preference"));
     }
 }

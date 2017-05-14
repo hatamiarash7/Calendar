@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.Contract;
+
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.activity.MainActivity;
-
-import org.jetbrains.annotations.Contract;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
     private final MainActivity mainActivity;
@@ -40,7 +40,6 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
         ViewHolder(View itemView, int viewType) {
             super(itemView);
-
             if (viewType == TYPE_ITEM) {
                 itemView.setOnClickListener(this);
                 itemTitle = (TextView) itemView.findViewById(R.id.itemTitle);
@@ -80,7 +79,6 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 holder.itemSubtitle.setText(utils.shape(drawerSubtitles[position - 1]));
             } else
                 holder.itemSubtitle.setVisibility(View.GONE);
-
 
             holder.imageView.setImageResource(drawerIcon.getResourceId(position - 1, 0));
             if (selectedItem == position)

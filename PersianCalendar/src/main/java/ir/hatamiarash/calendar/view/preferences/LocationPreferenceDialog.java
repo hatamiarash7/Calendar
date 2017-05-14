@@ -11,11 +11,6 @@ import android.view.ViewGroup;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.LocationAdapter;
 
-/**
- * persian_calendar
- * Author: hamidsafdari22@gmail.com
- * Date: 1/17/16
- */
 public class LocationPreferenceDialog extends PreferenceDialogFragmentCompat {
 
     @Override

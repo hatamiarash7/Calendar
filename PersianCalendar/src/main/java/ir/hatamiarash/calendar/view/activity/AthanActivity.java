@@ -14,13 +14,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import ir.hatamiarash.calendar.Constants;
-import ir.hatamiarash.calendar.R;
-import ir.hatamiarash.calendar.util.Utils;
 import com.github.praytimes.PrayTime;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import ir.hatamiarash.calendar.Constants;
+import ir.hatamiarash.calendar.R;
+import ir.hatamiarash.calendar.util.Utils;
 
 public class AthanActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = AthanActivity.class.getName();
@@ -41,9 +42,8 @@ public class AthanActivity extends AppCompatActivity implements View.OnClickList
 
         setContentView(R.layout.activity_athan);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |

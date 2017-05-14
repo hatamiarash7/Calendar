@@ -15,13 +15,14 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import ir.hatamiarash.calendar.R;
 import com.cepmuvakkit.times.posAlgo.AstroLib;
 import com.cepmuvakkit.times.posAlgo.EarthHeading;
 import com.cepmuvakkit.times.posAlgo.Horizontal;
 import com.cepmuvakkit.times.posAlgo.SunMoonPosition;
 
 import java.util.GregorianCalendar;
+
+import ir.hatamiarash.calendar.R;
 
 public class QiblaCompassView extends View {
     private Paint dashedPaint;
@@ -60,8 +61,7 @@ public class QiblaCompassView extends View {
 
         double ΔT = 0;
         double altitude = 0.0;
-        sunMoonPosition = new SunMoonPosition(jd, latitude, longitude,
-                altitude, ΔT);
+        sunMoonPosition = new SunMoonPosition(jd, latitude, longitude, altitude, ΔT);
         sunPosition = sunMoonPosition.getSunPosition();
         moonPosition = sunMoonPosition.getMoonPosition();
     }
@@ -106,10 +106,10 @@ public class QiblaCompassView extends View {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        if (specMode == MeasureSpec.UNSPECIFIED) {
+        if (specMode == MeasureSpec.UNSPECIFIED)
             // Return a default size of 200 if no bounds are specified.
             result = 600;
-        } else {
+        else {
             // As you want to fill the available space
             // always return the full available bounds.
             result = specSize;
@@ -228,10 +228,8 @@ public class QiblaCompassView extends View {
                 canvas.drawText(angle, angleTextX, angleTextY, textPaint);
             }
             canvas.restore();
-
             canvas.rotate(15, px, py);
         }
-
     }
 
     Paint sunPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -314,8 +312,7 @@ public class QiblaCompassView extends View {
 
         canvas.drawLine(px, py - Radius, px, py + Radius, qiblaPaint);
         qiblaPaint.setPathEffect(null);
-        canvas.drawBitmap(kaaba, px - kaaba.getWidth() / 2, py - Radius - kaaba.getHeight() / 2,
-                qiblaPaint);
+        canvas.drawBitmap(kaaba, px - kaaba.getWidth() / 2, py - Radius - kaaba.getHeight() / 2, qiblaPaint);
         canvas.restore();
 
     }

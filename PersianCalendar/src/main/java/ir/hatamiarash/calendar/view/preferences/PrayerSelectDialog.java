@@ -4,9 +4,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceDialogFragmentCompat;
 
-import ir.hatamiarash.calendar.R;
-
 import java.util.Set;
+
+import ir.hatamiarash.calendar.R;
 
 public class PrayerSelectDialog extends PreferenceDialogFragmentCompat {
 
@@ -22,26 +22,23 @@ public class PrayerSelectDialog extends PreferenceDialogFragmentCompat {
         prayers = prayerspref.getPrayers();
 
         boolean[] checked = new boolean[entriesKeys.length];
-        for (int i = 0; i < entriesKeys.length; ++i) {
+        for (int i = 0; i < entriesKeys.length; ++i)
             checked[i] = prayers.contains(entriesKeys[i]);
-        }
 
         builder.setMultiChoiceItems(R.array.prayerTimeNames, checked, new DialogInterface.OnMultiChoiceClickListener() {
             public void onClick(DialogInterface dialog, int which,
                                 boolean isChecked) {
-                if (isChecked) {
+                if (isChecked)
                     prayers.add(entriesKeys[which].toString());
-                } else {
+                else
                     prayers.remove(entriesKeys[which].toString());
-                }
             }
         });
     }
 
     @Override
     public void onDialogClosed(boolean positiveResult) {
-        if (positiveResult) {
+        if (positiveResult)
             ((PrayerSelectPreference) getPreference()).setPrayers(prayers);
-        }
     }
 }

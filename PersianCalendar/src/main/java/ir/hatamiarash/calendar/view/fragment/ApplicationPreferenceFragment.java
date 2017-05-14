@@ -26,11 +26,6 @@ import ir.hatamiarash.calendar.view.preferences.PrayerSelectPreference;
 import ir.hatamiarash.calendar.view.preferences.ShapedListDialog;
 import ir.hatamiarash.calendar.view.preferences.ShapedListPreference;
 
-/**
- * Preference activity
- *
- * @author ebraminio
- */
 public class ApplicationPreferenceFragment extends PreferenceFragmentCompat {
     private Preference categoryAthan;
     private Utils utils;
@@ -65,31 +60,29 @@ public class ApplicationPreferenceFragment extends PreferenceFragmentCompat {
     public void updateAthanPreferencesState() {
         boolean locationEmpty = utils.getCoordinate() == null;
         categoryAthan.setEnabled(!locationEmpty);
-        if (locationEmpty) {
+        if (locationEmpty)
             categoryAthan.setSummary(R.string.athan_disabled_summary);
-        } else {
+        else
             categoryAthan.setSummary("");
-        }
     }
 
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
         DialogFragment fragment = null;
-        if (preference instanceof PrayerSelectPreference) {
+        if (preference instanceof PrayerSelectPreference)
             fragment = new PrayerSelectDialog();
-        } else if (preference instanceof AthanVolumePreference) {
+        else if (preference instanceof AthanVolumePreference)
             fragment = new AthanVolumeDialog();
-        } else if (preference instanceof LocationPreference) {
+        else if (preference instanceof LocationPreference)
             fragment = new LocationPreferenceDialog();
-        } else if (preference instanceof AthanNumericPreference) {
+        else if (preference instanceof AthanNumericPreference)
             fragment = new AthanNumericDialog();
-        } else if (preference instanceof GPSLocationPreference) {
+        else if (preference instanceof GPSLocationPreference)
             fragment = new GPSLocationDialog();
-        } else if (preference instanceof ShapedListPreference) {
+        else if (preference instanceof ShapedListPreference)
             fragment = new ShapedListDialog();
-        } else {
+        else
             super.onDisplayPreferenceDialog(preference);
-        }
 
         if (fragment != null) {
             Bundle bundle = new Bundle(1);

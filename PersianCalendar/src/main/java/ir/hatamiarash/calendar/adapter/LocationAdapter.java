@@ -7,19 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.entity.CityEntity;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.preferences.LocationPreferenceDialog;
 
-import java.util.List;
-
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
     private String locale;
     private List<CityEntity> cities;
     private Utils utils;
-    LocationPreferenceDialog locationPreferenceDialog;
-    LayoutInflater layoutInflater;
+    private LocationPreferenceDialog locationPreferenceDialog;
+    private LayoutInflater layoutInflater;
 
     public LocationAdapter(LocationPreferenceDialog locationPreferenceDialog) {
         Context context = locationPreferenceDialog.getContext();
@@ -30,11 +30,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         this.locale = utils.getAppLanguage();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView country;
         private TextView city;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             city = (TextView) itemView.findViewById(R.id.text1);

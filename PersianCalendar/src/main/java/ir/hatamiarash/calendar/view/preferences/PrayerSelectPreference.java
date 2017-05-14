@@ -5,9 +5,9 @@ import android.support.v7.preference.DialogPreference;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 
-import ir.hatamiarash.calendar.util.Utils;
-
 import java.util.Set;
+
+import ir.hatamiarash.calendar.util.Utils;
 
 public class PrayerSelectPreference extends DialogPreference {
     Utils utils;
@@ -17,14 +17,15 @@ public class PrayerSelectPreference extends DialogPreference {
         utils = Utils.getInstance(context);
     }
 
-    public void setPrayers(Set<String> prayers) {
+    void setPrayers(Set<String> prayers) {
         final boolean wasBlocking = shouldDisableDependents();
         persistString(utils.setToCommaSeparated(prayers));
         final boolean isBlocking = shouldDisableDependents();
-        if (isBlocking != wasBlocking) notifyDependencyChange(isBlocking);
+        if (isBlocking != wasBlocking)
+            notifyDependencyChange(isBlocking);
     }
 
-    public Set<String> getPrayers() {
+    Set<String> getPrayers() {
         return utils.commaSeparatedToSet(getPersistedString(""));
     }
 

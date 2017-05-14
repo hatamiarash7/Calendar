@@ -11,11 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import ir.hatamiarash.calendar.Constants;
-import ir.hatamiarash.calendar.R;
-import ir.hatamiarash.calendar.adapter.ShapedArrayAdapter;
-import ir.hatamiarash.calendar.util.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +18,11 @@ import calendar.CivilDate;
 import calendar.DateConverter;
 import calendar.IslamicDate;
 import calendar.PersianDate;
+import ir.hatamiarash.calendar.Constants;
+import ir.hatamiarash.calendar.R;
+import ir.hatamiarash.calendar.adapter.ShapedArrayAdapter;
+import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Program activity for android
- *
- * @author ebraminio
- */
 public class ConverterFragment extends Fragment implements
         AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Utils utils;
@@ -43,9 +37,7 @@ public class ConverterFragment extends Fragment implements
     private RelativeLayout moreDate;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_converter, container, false);
         utils = Utils.getInstance(getContext());
@@ -56,16 +48,14 @@ public class ConverterFragment extends Fragment implements
         yearSpinner = (Spinner) view.findViewById(R.id.yearSpinner);
         monthSpinner = (Spinner) view.findViewById(R.id.monthSpinner);
         daySpinner = (Spinner) view.findViewById(R.id.daySpinner);
-
         date0 = (TextView) view.findViewById(R.id.date0);
         date1 = (TextView) view.findViewById(R.id.date1);
         date2 = (TextView) view.findViewById(R.id.date2);
+        moreDate = (RelativeLayout) view.findViewById(R.id.more_date);
 
         date0.setOnClickListener(this);
         date1.setOnClickListener(this);
         date2.setOnClickListener(this);
-
-        moreDate = (RelativeLayout) view.findViewById(R.id.more_date);
 
         // Shape and set font
         utils.setFontAndShape((TextView) view.findViewById(R.id.converterLabelDay));
@@ -165,7 +155,6 @@ public class ConverterFragment extends Fragment implements
             case R.id.daySpinner:
                 fillCalendarInfo();
                 break;
-
             case R.id.calendarTypeSpinner:
                 startingYearOnYearSpinner = utils.fillYearMonthDaySpinners(getContext(),
                         calendarTypeSpinner, yearSpinner, monthSpinner, daySpinner);

@@ -35,21 +35,18 @@ public class UpdateUtils {
     private static UpdateUtils myInstance;
     private Context context;
     private PersianDate pastDate;
-
     private ExtensionData mExtensionData;
+    private boolean firstTime = true;
 
     private UpdateUtils(Context context) {
         this.context = context;
     }
 
     public static UpdateUtils getInstance(Context context) {
-        if (myInstance == null) {
+        if (myInstance == null)
             myInstance = new UpdateUtils(context);
-        }
         return myInstance;
     }
-
-    boolean firstTime = true;
 
     public void update(boolean updateDate) {
         Log.d("UpdateUtils", "update");

@@ -300,49 +300,7 @@ public class MainActivity extends AppCompatActivity {
                     new Intent(Constants.LOCATION_PERMISSION_RESULT));
     }
 
-    /*public void CustomEvents() {
-        JSONArray custom_events;
-        JSONObject response = null;
-        Log.w("EVENTS", "load custom events");
-        Map<String, String> params = new HashMap<>();
-        params.put("tag", "get_events");
-        JSONObject parameters = new JSONObject(params);
-        String string_req = "req_fetch";
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://cl.zimia.ir/client.php", parameters, future, future);
-        AppController.getInstance().addToRequestQueue(request, string_req);
-        try {
-            while (response == null) {
-                try {
-                    response = future.get(5, TimeUnit.SECONDS); // Block thread, waiting for response, timeout after ... seconds
-                } catch (InterruptedException e) {
-                    // Received interrupt signal, but still don't have response
-                    // Restore thread's interrupted status to use higher up on the call stack
-                    Thread.currentThread().interrupt();
-                    // Continue waiting for response (unless you specifically intend to use the interrupt to cancel your request)
-                }
-            }
-            // response
-            boolean error = response.getBoolean("error");
-            if (!error) {
-                custom_events = response.getJSONArray("event");
-                loadEvents(true);
-            } else {
-                Log.w("Error", response.getString("error_msg"));
-                loadEvents(false);
-            }
-
-        } catch (ExecutionException e) {
-            // error
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            // timeout
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
-
+    // Get events from server
     private void CustomEvents() {
         String string_req = "req_fetch";
         StringRequest strReq = new StringRequest(Request.Method.POST, "http://cl.zimia.ir/client.php", new Response.Listener<String>() {
@@ -376,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, string_req);
     }
 
+    // update events with given JSONArray
     private void UpdateEvents(JSONArray events) {
         int length = events.length();
         List<EventEntity> new_events = new ArrayList<>();

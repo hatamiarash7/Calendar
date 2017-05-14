@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebraminio on 2/16/16.
- */
 public class ShapedPreferenceCategory extends PreferenceCategory {
     public ShapedPreferenceCategory(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

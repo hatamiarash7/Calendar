@@ -5,13 +5,10 @@
 
 package com.cepmuvakkit.times.posAlgo;
 
+class ScreenPosition {
+    int x;
+    int y;
 
-public class ScreenPosition {
-
-    public int x;
-    public int y;
-
-    public ScreenPosition() {
+    ScreenPosition() {
     }
-
 }

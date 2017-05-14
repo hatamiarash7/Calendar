@@ -2,18 +2,13 @@ package calendar;
 
 import java.util.Calendar;
 
-/**
- * @author Amir
- * @author ebraminio
- */
-
 public class CivilDate extends AbstractDate {
     private static final int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private int year;
     private int month;
     private int day;
 
-    public CivilDate() {
+    private CivilDate() {
         this(Calendar.getInstance());
     }
 
@@ -38,21 +33,13 @@ public class CivilDate extends AbstractDate {
 
     public void setDayOfMonth(int day) {
         if (day < 1)
-            throw new DayOutOfRangeException(
-                    Constants.DAY + " " + day + " "  + Constants.IS_OUT_OF_RANGE);
-
+            throw new DayOutOfRangeException(Constants.DAY + " " + day + " " + Constants.IS_OUT_OF_RANGE);
         if (month != 2 && day > daysInMonth[month])
-            throw new DayOutOfRangeException(
-                    Constants.DAY + " "  + day + " "  + Constants.IS_OUT_OF_RANGE);
-
+            throw new DayOutOfRangeException(Constants.DAY + " " + day + " " + Constants.IS_OUT_OF_RANGE);
         if (month == 2 && isLeapYear() && day > 29)
-            throw new DayOutOfRangeException(
-                    Constants.DAY + " "  + day + " "  + Constants.IS_OUT_OF_RANGE);
-
+            throw new DayOutOfRangeException(Constants.DAY + " " + day + " " + Constants.IS_OUT_OF_RANGE);
         if (month == 2 && (!isLeapYear()) && day > 28)
-            throw new DayOutOfRangeException(
-                    Constants.DAY + " "  + day + " "  + Constants.IS_OUT_OF_RANGE);
-
+            throw new DayOutOfRangeException(Constants.DAY + " " + day + " " + Constants.IS_OUT_OF_RANGE);
         // TODO check for the case of leap year for February
         this.day = day;
     }
@@ -79,13 +66,10 @@ public class CivilDate extends AbstractDate {
 
     public void setMonth(int month) {
         if (month < 1 || month > 12)
-            throw new MonthOutOfRangeException(
-                    Constants.MONTH  + " " + month + " "  + Constants.IS_OUT_OF_RANGE);
-
+            throw new MonthOutOfRangeException(Constants.MONTH + " " + month + " " + Constants.IS_OUT_OF_RANGE);
         // Set the day again, so that exceptions are thrown if the
         // day is out of range
         setDayOfMonth(getDayOfMonth());
-
         this.month = month;
     }
 
@@ -104,17 +88,14 @@ public class CivilDate extends AbstractDate {
     public void setYear(int year) {
         if (year == 0)
             throw new YearOutOfRangeException(Constants.YEAR_0_IS_INVALID);
-
         this.year = year;
     }
 
     public boolean isLeapYear() {
         if (year % 400 == 0)
             return true;
-
         else if (year % 100 == 0)
             return false;
-
         return (year % 4 == 0);
     }
 

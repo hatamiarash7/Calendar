@@ -1,7 +1,8 @@
 package ir.hatamiarash.calendar;
 
-import ir.hatamiarash.calendar.util.UpdateUtils;
 import com.google.android.apps.dashclock.api.DashClockExtension;
+
+import ir.hatamiarash.calendar.util.UpdateUtils;
 
 public class DashClockUpdate extends DashClockExtension {
 
@@ -12,5 +13,4 @@ public class DashClockUpdate extends DashClockExtension {
         updateUtils.update(false);
         publishUpdate(updateUtils.getExtensionData());
     }
-
 }

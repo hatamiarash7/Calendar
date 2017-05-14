@@ -12,15 +12,10 @@ import ir.hatamiarash.calendar.util.UpdateUtils;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.activity.AthanActivity;
 
-/**
- * Startup broadcast receiver
- *
- * @author ebraminio
- */
 public class BroadcastReceivers extends BroadcastReceiver {
     private Context context;
-    private UpdateUtils updateUtils;
-    private Utils utils;
+    UpdateUtils updateUtils;
+    Utils utils;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,14 +23,13 @@ public class BroadcastReceivers extends BroadcastReceiver {
         utils = Utils.getInstance(context);
         updateUtils = UpdateUtils.getInstance(context);
 
-        if (intent != null && intent.getAction() != null && !TextUtils.isEmpty(intent.getAction())) {
+        if (intent != null && intent.getAction() != null && !TextUtils.isEmpty(intent.getAction()))
             if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED) ||
                     intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED) ||
                     intent.getAction().equals(Constants.BROADCAST_RESTART_APP)) {
 
-                if (!Utils.getInstance(context).isServiceRunning(ApplicationService.class)) {
+                if (!Utils.getInstance(context).isServiceRunning(ApplicationService.class))
                     context.startService(new Intent(context, ApplicationService.class));
-                }
 
             } else if (intent.getAction().equals(Intent.ACTION_TIME_TICK) ||
                     intent.getAction().equals(Intent.ACTION_TIME_CHANGED) ||
@@ -54,7 +48,6 @@ public class BroadcastReceivers extends BroadcastReceiver {
             } else if (intent.getAction().equals(Constants.BROADCAST_ALARM)) {
                 startAthanActivity(intent.getStringExtra(Constants.KEY_EXTRA_PRAYER_KEY));
             }
-        }
     }
 
     private void startAthanActivity(String string) {

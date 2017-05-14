@@ -1,10 +1,10 @@
 package com.github.praytimes;
 
-public class MinuteOrAngleDouble {
+class MinuteOrAngleDouble {
     private final boolean isMin;
     private final double value;
 
-    public MinuteOrAngleDouble(double value, boolean isMin) {
+    MinuteOrAngleDouble(double value, boolean isMin) {
         this.value = value;
         this.isMin = isMin;
     }

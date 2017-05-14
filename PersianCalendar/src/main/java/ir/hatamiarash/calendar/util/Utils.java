@@ -928,15 +928,18 @@ public class Utils {
         return startingYearOnYearSpinner;
     }
 
+    // update current event
     static public void UpdateEvents(List<EventEntity> _events) {
         events = _events;
     }
 
+    // return current event
     @Contract(pure = true)
     static public List<EventEntity> GetEvents() {
         return events;
     }
 
+    // check event exists or not
     static public boolean EventExists(String title) {
         for (EventEntity event : events)
             if (event.getTitle().equals(title))

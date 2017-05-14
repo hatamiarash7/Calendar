@@ -2,11 +2,6 @@ package ir.hatamiarash.calendar.entity;
 
 import calendar.PersianDate;
 
-/**
- * EventEntity
- *
- * @author ebraminio
- */
 public class EventEntity {
     private PersianDate date;
     private String title;

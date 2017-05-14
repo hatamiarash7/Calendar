@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 
 import ir.hatamiarash.calendar.util.Utils;
 
-/**
- * Created by ebraminio on 2/16/16.
- */
 public class ShapedCheckBoxPreference extends CheckBoxPreference {
     public ShapedCheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
