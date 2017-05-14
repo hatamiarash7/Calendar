@@ -24,9 +24,25 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import calendar.PersianDate;
 import ir.hatamiarash.calendar.Constants;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.DrawerAdapter;
+import ir.hatamiarash.calendar.entity.EventEntity;
+import ir.hatamiarash.calendar.mine.AppController;
 import ir.hatamiarash.calendar.service.ApplicationService;
 import ir.hatamiarash.calendar.util.UpdateUtils;
 import ir.hatamiarash.calendar.util.Utils;
@@ -85,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             startService(new Intent(getBaseContext(), ApplicationService.class));
 
         updateUtils.update(true);
+        CustomEvents();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -281,5 +298,107 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == Constants.LOCATION_PERMISSION_REQUEST_CODE)
             LocalBroadcastManager.getInstance(this).sendBroadcast(
                     new Intent(Constants.LOCATION_PERMISSION_RESULT));
+    }
+
+    /*public void CustomEvents() {
+        JSONArray custom_events;
+        JSONObject response = null;
+        Log.w("EVENTS", "load custom events");
+        Map<String, String> params = new HashMap<>();
+        params.put("tag", "get_events");
+        JSONObject parameters = new JSONObject(params);
+        String string_req = "req_fetch";
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://cl.zimia.ir/client.php", parameters, future, future);
+        AppController.getInstance().addToRequestQueue(request, string_req);
+        try {
+            while (response == null) {
+                try {
+                    response = future.get(5, TimeUnit.SECONDS); // Block thread, waiting for response, timeout after ... seconds
+                } catch (InterruptedException e) {
+                    // Received interrupt signal, but still don't have response
+                    // Restore thread's interrupted status to use higher up on the call stack
+                    Thread.currentThread().interrupt();
+                    // Continue waiting for response (unless you specifically intend to use the interrupt to cancel your request)
+                }
+            }
+            // response
+            boolean error = response.getBoolean("error");
+            if (!error) {
+                custom_events = response.getJSONArray("event");
+                loadEvents(true);
+            } else {
+                Log.w("Error", response.getString("error_msg"));
+                loadEvents(false);
+            }
+
+        } catch (ExecutionException e) {
+            // error
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            // timeout
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    private void CustomEvents() {
+        String string_req = "req_fetch";
+        StringRequest strReq = new StringRequest(Request.Method.POST, "http://cl.zimia.ir/client.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.w(TAG, "Volley Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error)
+                        UpdateEvents(jObj.getJSONArray("event"));
+                    else
+                        Log.w("Error", jObj.getString("error_msg"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w(TAG, "Volley Error" + error.getMessage());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() {
+                java.util.Map<String, String> params = new HashMap<>();
+                params.put("tag", "get_events");
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, string_req);
+    }
+
+    private void UpdateEvents(JSONArray events) {
+        int length = events.length();
+        List<EventEntity> new_events = new ArrayList<>();
+        try {
+            for (int i = 0; i < length; ++i) {
+                JSONObject event = events.getJSONObject(i);
+                int year = event.getInt("year");
+                int month = event.getInt("month");
+                int day = event.getInt("day");
+                String title = event.getString("title");
+                int h = event.getInt("holiday");
+                boolean holiday = h != 0;
+                if (!Utils.EventExists(title))
+                    new_events.add(new EventEntity(new PersianDate(year, month, day), title, holiday));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        List<EventEntity> current_events = Utils.GetEvents();
+
+        for (EventEntity event : current_events)
+            new_events.add(event);
+
+        Utils.UpdateEvents(new_events);
     }
 }
