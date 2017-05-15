@@ -79,9 +79,9 @@
                     android:padding="@dimen/card_padding">
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/day_info_icon"
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="@dimen/icon_size"
-                        android:id="@+id/day_info_icon"
                         android:gravity="right"
                         android:tint="?attr/colorIcon"
                         app:srcCompat="@drawable/ic_event"/>
@@ -165,10 +165,10 @@
                     android:padding="@dimen/card_padding">
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/event_icon"
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="@dimen/icon_size"
                         android:gravity="center"
-                        android:id="@+id/event_icon"
                         android:tint="?attr/colorIcon"
                         app:srcCompat="@drawable/ic_event_note"/>
 
@@ -176,9 +176,9 @@
                         android:id="@+id/eventContainer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/icon_margin"
                         android:layout_marginStart="@dimen/icon_margin"
+                        android:layout_weight="1"
                         android:gravity="right"
                         android:orientation="vertical">
 
@@ -294,7 +294,9 @@
                                 android:id="@+id/fajr"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -340,7 +342,9 @@
                                 android:id="@+id/sunrise"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -387,7 +391,9 @@
                                 android:id="@+id/dhuhr"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -434,7 +440,9 @@
                                 android:id="@+id/asr"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -481,7 +489,9 @@
                                 android:id="@+id/sunset"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -528,7 +538,9 @@
                                 android:id="@+id/maghrib"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -575,7 +587,9 @@
                                 android:id="@+id/isgha"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
@@ -622,7 +636,9 @@
                                 android:id="@+id/midnight"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/item_calendar_margin_top"
+                                android:textAlignment="textStart"
                                 android:textColor="?attr/colorTextNormal"
                                 android:textSize="@dimen/text_size_description"/>
                         </android.support.v7.widget.LinearLayoutCompat>
