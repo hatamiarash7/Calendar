@@ -286,6 +286,8 @@ public class CalendarFragment extends Fragment
             case R.id.gregorian_date:
                 utils.copyToClipboard(v);
                 break;
+            case R.id.cardEvent:
+
         }
     }
 
