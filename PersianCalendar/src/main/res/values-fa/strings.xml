@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">تقویم فارسی</string>
-    <string name="widget_name">تقویم فارسی</string>
-    <string name="widget_mini_name">تقویم فارسی (کوچک)</string>
+    <string name="app_name">تقویم</string>
+    <string name="widget_name">تقویم</string>
+    <string name="widget_mini_name">تقویم (کوچک)</string>
     <string name="latitude">عرض جغرافیایی</string>
     <string name="longitude">طول جغرافیایی</string>
     <string name="settings">تنظیمات</string>
