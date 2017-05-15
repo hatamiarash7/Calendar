@@ -48,4 +48,16 @@
     <color name="light_drawer_select">#eeeeee</color>
     <color name="light_icon">@color/light_accent</color>
     <color name="light_icon_drawer">@color/light_accent</color>
+
+    <color name="white">#ffffff</color>
+    <color name="gray">#999999</color>
+    <color name="gray2">#4f4f4f</color>
+    <color name="gray3">#d16d6d6d</color>
+    <color name="black">#000000</color>
+    <color name="MyGreen">#00c006</color>
+    <color name="Blue">#2196f3</color>
+    <color name="Purple">#9c27b0</color>
+    <color name="Green">#4caf50</color>
+    <color name="Amber">#ffe507</color>
+    <color name="Red">#f44336</color>
 </resources>

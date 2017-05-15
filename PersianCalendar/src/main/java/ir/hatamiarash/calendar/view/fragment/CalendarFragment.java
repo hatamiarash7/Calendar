@@ -36,6 +36,8 @@ import calendar.PersianDate;
 import ir.hatamiarash.calendar.Constants;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.CalendarAdapter;
+import ir.hatamiarash.calendar.mine.Helper;
+import ir.hatamiarash.calendar.mine.TAGs;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.dialog.SelectDayDialog;
 
@@ -287,7 +289,8 @@ public class CalendarFragment extends Fragment
                 utils.copyToClipboard(v);
                 break;
             case R.id.cardEvent:
-
+                Helper.MakeToast(getActivity(), "t", TAGs.SUCCESS);
+                break;
         }
     }
 
