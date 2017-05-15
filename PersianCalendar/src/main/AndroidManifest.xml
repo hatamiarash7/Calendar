@@ -49,6 +49,10 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:theme="@style/FullscreenTheme"/>
+        <activity
+            android:name=".view.activity.WebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:excludeFromRecents="true"/>
 
         <receiver
             android:name=".service.BroadcastReceivers"

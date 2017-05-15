@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,13 +22,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.github.praytimes.Clock;
 import com.github.praytimes.Coordinate;
 import com.github.praytimes.PrayTime;
 import com.github.praytimes.PrayTimesCalculator;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import calendar.CivilDate;
@@ -36,9 +46,11 @@ import calendar.PersianDate;
 import ir.hatamiarash.calendar.Constants;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.CalendarAdapter;
+import ir.hatamiarash.calendar.mine.AppController;
 import ir.hatamiarash.calendar.mine.Helper;
 import ir.hatamiarash.calendar.mine.TAGs;
 import ir.hatamiarash.calendar.util.Utils;
+import ir.hatamiarash.calendar.view.activity.WebActivity;
 import ir.hatamiarash.calendar.view.dialog.SelectDayDialog;
 
 public class CalendarFragment extends Fragment
@@ -158,6 +170,8 @@ public class CalendarFragment extends Fragment
 
         owghat.setOnClickListener(this);
         today.setOnClickListener(this);
+        eventTitle.setOnClickListener(this);
+        holidayTitle.setOnClickListener(this);
         todayIcon.setOnClickListener(this);
         gregorianDate.setOnClickListener(this);
         islamicDate.setOnClickListener(this);
@@ -288,8 +302,14 @@ public class CalendarFragment extends Fragment
             case R.id.gregorian_date:
                 utils.copyToClipboard(v);
                 break;
-            case R.id.cardEvent:
-                Helper.MakeToast(getActivity(), "t", TAGs.SUCCESS);
+            case R.id.event_title:
+                String t = eventTitle.getText().toString();
+                Helper.MakeToast(getActivity(), t, TAGs.SUCCESS);
+
+                break;
+            case R.id.holiday_title:
+                String title = holidayTitle.getText().toString();
+                Helper.MakeToast(getActivity(), title, TAGs.SUCCESS);
                 break;
         }
     }
@@ -366,5 +386,51 @@ public class CalendarFragment extends Fragment
 
     public int getViewPagerPosition() {
         return viewPagerPosition;
+    }
+
+    private void OpenEvent(String title) {
+        final String url = "http://cl.zimia.ir/";
+        String string_req = "req_fetch";
+        StringRequest strReq = new StringRequest(Request.Method.POST, url + "client.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.w("CalendarFragment", "Volley Response: " + response);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    JSONArray events;
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        events = jObj.getJSONArray("event");
+                        try {
+                            for (int i = 0; i < events.length(); ++i) {
+                                JSONObject event = events.getJSONObject(i);
+                                String id = event.getString("unique_id");
+                                Intent intent = new Intent(getActivity(), WebActivity.class);
+                                intent.putExtra("address", url + "web/" + id + ".html");
+                                startActivity(intent);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        Log.w("Error", jObj.getString("error_msg"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w("CalendarFragment", "Volley Error" + error.getMessage());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() {
+                java.util.Map<String, String> params = new HashMap<>();
+                params.put("tag", "get_events");
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, string_req);
     }
 }
