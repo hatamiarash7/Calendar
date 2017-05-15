@@ -345,10 +345,11 @@ public class MainActivity extends AppCompatActivity {
                 int month = event.getInt("month");
                 int day = event.getInt("day");
                 String title = event.getString("title");
+                String type = event.getString("type");
                 int h = event.getInt("holiday");
                 boolean holiday = h != 0;
                 if (!Utils.EventExists(title))
-                    new_events.add(new EventEntity(new PersianDate(year, month, day), title, holiday));
+                    new_events.add(new EventEntity(new PersianDate(year, month, day), title, holiday, type));
             }
         } catch (JSONException e) {
             e.printStackTrace();

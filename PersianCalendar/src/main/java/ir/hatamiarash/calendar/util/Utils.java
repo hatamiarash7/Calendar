@@ -577,8 +577,9 @@ public class Utils {
                 int month = event.getInt("month");
                 int day = event.getInt("day");
                 String title = event.getString("title");
+                String type = event.getString("type");
                 boolean holiday = event.getBoolean("holiday");
-                _events.add(new EventEntity(new PersianDate(year, month, day), title, holiday));
+                _events.add(new EventEntity(new PersianDate(year, month, day), title, holiday, type));
             }
         } catch (JSONException | NullPointerException e) {
             Log.e(TAG, e.getMessage());
@@ -937,6 +938,14 @@ public class Utils {
     @Contract(pure = true)
     static public List<EventEntity> GetEvents() {
         return events;
+    }
+
+    @Nullable
+    static public String GetEvent(String title) {
+        for (EventEntity event : events)
+            if (event.getTitle().equals(title))
+                return event.getType();
+        return null;
     }
 
     // check event exists or not

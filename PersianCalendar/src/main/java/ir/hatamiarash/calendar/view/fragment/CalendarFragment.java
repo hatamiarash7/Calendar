@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
@@ -43,12 +44,11 @@ import java.util.Map;
 import calendar.CivilDate;
 import calendar.DateConverter;
 import calendar.PersianDate;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.hatamiarash.calendar.Constants;
 import ir.hatamiarash.calendar.R;
 import ir.hatamiarash.calendar.adapter.CalendarAdapter;
 import ir.hatamiarash.calendar.mine.AppController;
-import ir.hatamiarash.calendar.mine.Helper;
-import ir.hatamiarash.calendar.mine.TAGs;
 import ir.hatamiarash.calendar.util.Utils;
 import ir.hatamiarash.calendar.view.activity.WebActivity;
 import ir.hatamiarash.calendar.view.dialog.SelectDayDialog;
@@ -96,6 +96,8 @@ public class CalendarFragment extends Fragment
     private RelativeLayout midnightLayout;
 
     private int viewPagerPosition;
+
+    private SweetAlertDialog progressDialog;
 
     @Nullable
     @Override
@@ -176,6 +178,10 @@ public class CalendarFragment extends Fragment
         gregorianDate.setOnClickListener(this);
         islamicDate.setOnClickListener(this);
         shamsiDate.setOnClickListener(this);
+
+        progressDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.setCancelable(false);
+        progressDialog.getProgressHelper().setBarColor(ContextCompat.getColor(getActivity(), R.color.light_accent));
 
         utils.setFontAndShape((TextView) view.findViewById(R.id.event_card_title));
         utils.setFontAndShape((TextView) view.findViewById(R.id.today));
@@ -303,13 +309,12 @@ public class CalendarFragment extends Fragment
                 utils.copyToClipboard(v);
                 break;
             case R.id.event_title:
-                String t = eventTitle.getText().toString();
-                Helper.MakeToast(getActivity(), t, TAGs.SUCCESS);
-
+                if (utils.GetEvent(eventTitle.getText().toString()).equals("Custom"))
+                    OpenEvent(eventTitle.getText().toString());
                 break;
             case R.id.holiday_title:
-                String title = holidayTitle.getText().toString();
-                Helper.MakeToast(getActivity(), title, TAGs.SUCCESS);
+                if (utils.GetEvent(holidayTitle.getText().toString()).equals("Custom"))
+                    OpenEvent(holidayTitle.getText().toString());
                 break;
         }
     }
@@ -388,7 +393,9 @@ public class CalendarFragment extends Fragment
         return viewPagerPosition;
     }
 
-    private void OpenEvent(String title) {
+    private void OpenEvent(final String title) {
+        progressDialog.setTitleText("لطفا منتظر بمانید");
+        showDialog();
         final String url = "http://cl.zimia.ir/";
         String string_req = "req_fetch";
         StringRequest strReq = new StringRequest(Request.Method.POST, url + "client.php", new Response.Listener<String>() {
@@ -407,30 +414,48 @@ public class CalendarFragment extends Fragment
                                 String id = event.getString("unique_id");
                                 Intent intent = new Intent(getActivity(), WebActivity.class);
                                 intent.putExtra("address", url + "web/" + id + ".html");
+                                hideDialog();
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
+                            hideDialog();
                             e.printStackTrace();
                         }
-                    } else
+                    } else {
                         Log.w("Error", jObj.getString("error_msg"));
+                        hideDialog();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    hideDialog();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.w("CalendarFragment", "Volley Error" + error.getMessage());
+                hideDialog();
             }
         }) {
             @Override
             protected java.util.Map<String, String> getParams() {
                 java.util.Map<String, String> params = new HashMap<>();
-                params.put("tag", "get_events");
+                params.put("tag", "get_event");
+                Log.w("TITLE", title);
+                params.put("title", title);
                 return params;
             }
         };
         AppController.getInstance().addToRequestQueue(strReq, string_req);
+    }
+
+    private void showDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hideDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }
